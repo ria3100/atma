@@ -38,6 +38,10 @@
 #### エンドポイント
 POST https://asia-northeast1-mock-mock.cloudfunctions.net/main
 
+正常=>200系
+
+エラー=>400系
+
 #### POSTパラメータ
 jsonで、
 
@@ -52,6 +56,10 @@ https://payroll.moneyforward.com/
 
 パスワードをそのまま保存すると、セキュリティ上問題があるので、パスワードは鍵で暗号化します
 
-こちらで共有するパスワードと[公開鍵](./public.key)を元に、パスワードを暗号化して使ってください。
+こちらで共有するパスワードを、[公開鍵](./public.key)を元に暗号化して使ってください。
 
 https://github.com/wwwtyro/cryptico
+
+`testtest`というパスワードを上記の公開鍵で暗号化して、リクエストを送ると正常系responseが帰ってくるはずです
+
+それ以外はエラーのresponseが返ってきます
