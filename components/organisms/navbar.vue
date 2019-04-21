@@ -12,7 +12,7 @@
       </a>
     </div>
 
-    <div id="navbarBasic" class="navbar-menu">
+    <!-- <div id="navbarBasic" class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
@@ -22,6 +22,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </nav>  
 </template>

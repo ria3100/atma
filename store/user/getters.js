@@ -1,11 +1,8 @@
-const getUsers = state => {
-  return state.list
-}
+const getUsers = ({ list }) => list
 
-const getUser = state => id => {
-  // return state.list.find(user => user.id === id)
-  return null
-}
+const getUser = ({ list }) => uid => (
+  list.find(user => user.uid === uid)
+)
 
 export default {
   getUsers,
