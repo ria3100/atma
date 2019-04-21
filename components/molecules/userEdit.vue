@@ -6,6 +6,7 @@
         <input
           class="input"
           type="text"
+          name="name"
           placeholder="Text input"
           v-model="tmp.name"
           data-vv-as="name"
@@ -20,6 +21,7 @@
         <input
           class="input"
           type="text"
+          name="uid"
           placeholder="Text input"
           v-model="tmp.uid"
           data-vv-as="uid"
@@ -34,6 +36,7 @@
         <textarea
           class="textarea"
           type="text"
+          name="pass"
           placeholder="Text input"
           v-model="tmp.pass"
           data-vv-as="pass"
@@ -77,7 +80,7 @@ export default {
     submit() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          this.$emit(action, tmp)
+          this.$emit(this.action, this.tmp)
           return
         }
       })
