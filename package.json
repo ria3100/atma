@@ -19,6 +19,7 @@
     "cross-env": "^5.2.0",
     "emotion": "^10.0.9",
     "nuxt": "^2.4.0",
+    "vee-validate": "^2.2.4",
     "vue-emotion": "^0.4.29",
     "vuex": "^3.1.0"
   },
