@@ -1,5 +1,9 @@
 <template>
-  <div class="columns is-mobile">
+  <div class="columns is-mobile is-multiline">
+    <div class="column is-12">
+      {{user.name}}
+    </div>
+    <hr/>
     <div class="column is-6">
       <a
         class="button is-large is-primary is-fullwidth"
@@ -21,6 +25,6 @@
 
 <script>
 export default {
-  // props: ['user']
+  props: ['user']
 }
 </script>
