@@ -1,5 +1,12 @@
 <template>
   <div class="box">
-    foo
+    {{user.name}}
+    {{user.uid}}
   </div>
 </template>
+
+<script>
+export default {
+  props: ['user'],
+}
+</script>

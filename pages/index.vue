@@ -1,18 +1,38 @@
 <template>
-    <section class="section">
+  <section class="section">
     <div class="container">
-      <Users />
+      <Users @editUser="editUser"/>
     </div>
+    <Modal :isOpen="editUid !== null" @close="editUser(null)">
+      <div class="box">
+        {{editUid}}
+      </div>
+    </Modal>
   </section>
 </template>
 
 <script>
-import { Users } from '@/components/organisms'
+import { Users, Modal } from '@/components/organisms'
 
 export default {
   components: {
-    Users
+    Users,
+    Modal
   },
+
+  data() {
+    return {
+      editUid: null,
+    }
+  },
+
+  methods: {
+    editUser(uid) {
+      this.editUid = uid
+    }
+  },
+
+
 }
 </script>
 
