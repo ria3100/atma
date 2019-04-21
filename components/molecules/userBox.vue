@@ -2,8 +2,8 @@
   <div class="box" :class="{'is-simple': !isEdit}">
     <strong>{{user.name}}</strong><br/>
     <small>{{user.uid}}</small>
-    <div v-if="isEdit" @click="$emit('update')">edit</div>
-    <div v-if="isEdit" @click="$emit('remove')">remove</div>
+    <div v-if="isEdit" @click="$emit('update')"><i class="fas fa-edit"></i></div>
+    <div v-if="isEdit" @click="$emit('remove')"><i class="fas fa-trash-alt"></i></div>
   </div>
 </template>
 
