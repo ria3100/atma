@@ -36,7 +36,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '@/plugins/vee-validate', ssr: false }],
+  plugins: [
+    { src: '@/plugins/vee-validate', ssr: false },
+    { src: '@/plugins/persistedstate.js', ssr: false }
+  ],
 
   /*
    ** Nuxt.js modules
