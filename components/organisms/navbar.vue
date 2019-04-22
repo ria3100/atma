@@ -2,7 +2,7 @@
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <n-link class="navbar-item" to="/">
-        title
+        簡単にタイムカードを押すアプリ(仮)
       </n-link>
 
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">

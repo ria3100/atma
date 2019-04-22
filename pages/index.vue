@@ -1,18 +1,20 @@
 <template>
   <section class="section">
     <div class="container">
-      <div @click="isEdit = !isEdit">{{isEdit}}</div>
-      <Users :isEdit="isEdit" />
+      <Users :isEdit="isEdit" @setIsEdit="setIsEdit" />
     </div>
+    <EditButton v-if="!isEdit" @setIsEdit="setIsEdit"/>
   </section>
 </template>
 
 <script>
-import { Modal, Users } from '@/components/organisms'
+import { Users } from '@/components/organisms'
+import { EditButton } from '@/components/atoms'
 
 export default {
   components: {
     Users,
+    EditButton
   },
 
   data() {
@@ -20,6 +22,12 @@ export default {
       isEdit: false,
     }
   },
+
+  methods: {
+    setIsEdit(isEdit) {
+      this.isEdit = isEdit
+    }
+  }
 
 }
 </script>

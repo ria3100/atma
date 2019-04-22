@@ -1,9 +1,8 @@
 <template>
   <div class="columns is-mobile is-multiline">
     <div class="column is-12">
-      {{user.name}}
+      <strong>{{user.name}}</strong>
     </div>
-    <hr/>
     <div class="column is-6">
       <a
         class="button is-large is-primary is-fullwidth"

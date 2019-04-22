@@ -12,16 +12,15 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/axios": "^5.4.1",
     "@nuxtjs/bulma": "^1.2.1",
     "@nuxtjs/font-awesome": "^1.0.3",
     "@nuxtjs/pwa": "^2.6.0",
     "cross-env": "^5.2.0",
-    "emotion": "^10.0.9",
     "nuxt": "^2.4.0",
     "vee-validate": "^2.2.4",
-    "vue-emotion": "^0.4.29",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.1.0",
