@@ -129,7 +129,7 @@ export default {
     },
     async post(type, uid) {
       const { pass } = this.$store.getters['user/getUser'](uid)
-      const res = await this.$axios.post('http://localhost:3000/foo', { type, uid, pass })
+      const res = await this.$axios.post('https://asia-northeast1-mock-mock.cloudfunctions.net/main', { type, uid, pass })
 
       const status = res.status === 200
         ? 'success'

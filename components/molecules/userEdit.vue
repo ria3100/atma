@@ -32,16 +32,16 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">パスワード</label>
+        <label class="label">{{action === 'update' ? '変更する' : ''}}パスワード</label>
         <div class="control">
-          <textarea
-            class="textarea"
+          <input
+            class="input"
             type="text"
             name="pass"
-            placeholder="パスワードの公開鍵を入力してください"
+            :placeholder="`${action === 'update' ? '変更する' : ''}パスワードを入力してください`"
             v-model="tmp.pass"
-            data-vv-as="パスワード"
-            v-validate="'required'"
+            :data-vv-as="`${action === 'update' ? '変更する' : ''}パスワード`"
+            v-validate="action === 'add' ? 'required' : ''"
           />
           <p class="has-text-danger">{{ errors.first('pass') }}</p>
         </div>
@@ -70,12 +70,17 @@ export default {
 
   data() {
     return {
-      tmp: {}
+      tmp: {
+        name: null,
+        uid: null,
+        pass: null
+      }
     }
   },
 
   created() {
-    this.tmp = {...this.user}
+    this.tmp.name = this.user.name
+    this.tmp.uid = this.user.uid
   },
 
   methods: {
