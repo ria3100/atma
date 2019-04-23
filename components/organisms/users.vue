@@ -17,10 +17,17 @@
       </p>
     </div>
 
-    <div class="columns is-multiline">
+    <Draggable
+      v-model="userList"
+      v-bind="dragOptions"
+      handle=".handle"
+      @start="isDrag = true"
+      @end="isDrag = false"
+      class="columns is-multiline"
+    >
       <div
-        class="column is-4" v-for="(user, i) in userList"
-        :key="i"
+        class="column is-4" v-for="user in userList"
+        :key="user.uid"
         @click="!isEdit && openModal('timecard', user.uid)"
       >
         <UserBox
@@ -39,16 +46,15 @@
           <i class="fas fa-plus-circle"></i>
         </div>
       </div>
+    </Draggable>
 
-      <div class="column is-12" v-if="isEdit">
-        <a
-          class="button is-primary is-fullwidth"
-          @click="$emit('setIsEdit', false)"
-        >
-          編集を終わる
-        </a>
-      </div>
-    </div>
+    <a
+      class="button is-primary is-fullwidth"
+      @click="$emit('setIsEdit', false)"
+      v-if="isEdit"
+    >
+      編集を終わる
+    </a>
 
     <Modal :isOpen="modalUid !== null" @close="closeModal">
       <div class="box">
@@ -79,6 +85,7 @@
 </template>
 
 <script>
+import Draggable from 'vuedraggable'
 import Modal from './modal'
 import { TimecardButtons, UserEdit, UserRemove, UserBox } from '@/components/molecules'
 
@@ -89,7 +96,8 @@ export default {
     Modal,
     TimecardButtons,
     UserEdit,
-    UserRemove
+    UserRemove,
+    Draggable
   },
 
   data() {
@@ -97,13 +105,13 @@ export default {
       modalUid: null,
       action: null,
       resNotification: null,
-      setTimeoutId: null
+      setTimeoutId: null,
+      isDrag: false
     }
   },
 
   methods: {
     openModal(action, uid) {
-      console.log(action) 
       this.modalUid = uid
       this.action = action
     },
@@ -140,7 +148,6 @@ export default {
       this.notification('success')
     },
     remove(uid) {
-      console.log('remove',uid)
       this.$store.dispatch("user/removeUser", this.modalUid)
       this.closeModal()
       this.notification('success')
@@ -159,9 +166,22 @@ export default {
   },
 
   computed: {
-    userList() {
-      return this.$store.getters['user/getUsers']
-    }
+    userList: {
+      get() {
+        return this.$store.getters['user/getUsers']
+      },
+      set(val) {
+        this.$store.dispatch('user/updateList', val)[0]
+      }
+    },
+    dragOptions() {
+      return {
+        animation: 200,
+        group: 'description',
+        disabled: false,
+        ghostClass: 'ghost'
+      }
+    },
   }
 
 }
@@ -170,5 +190,15 @@ export default {
 <style lang="scss" scoped>
   .notification {
     margin-bottom: 32px;
+  }
+  .flip-list-move {
+    transition: transform 0.5s;
+  }
+  .no-move {
+    transition: transform 0s;
+  }
+  .ghost {
+    opacity: 0.5;
+    background: #ddd;
   }
 </style>

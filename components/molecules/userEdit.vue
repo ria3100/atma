@@ -81,6 +81,17 @@ export default {
   methods: {
     submit() {
       this.$validator.validateAll().then((result) => {
+
+        // 登録済みのメアド submit()のときしかチェックできてない
+        const exist = this.$store.getters['user/getUser'](this.tmp.uid)
+        if (this.action === 'add' && exist) {
+          this.$validator.errors.add({
+            field: 'uid',
+            msg: '同一のメールアドレスが既に存在します'
+          })
+          return
+        }
+
         if (result) {
           this.$emit(this.action, this.tmp)
           return
