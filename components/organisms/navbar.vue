@@ -1,27 +1,38 @@
 <template>
-  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <n-link class="navbar-item" to="/">
         簡単にタイムカードを押すアプリ(仮)
       </n-link>
 
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+      <div class="button-area navbar-item">
+            <n-link v-if="!isEdit" class="button is-primary" to="/edit">
+              <i class="fas fa-cog"></i>
+            </n-link>
+            <n-link v-if="isEdit" class="button is-info" to="/">
+              <i class="fas fa-sign-out-alt"></i>
+            </n-link>
+      </div>
     </div>
 
-    <!-- <div id="navbarBasic" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <n-link class="button is-primary" to="/manage">
-              manage
-            </n-link>
-          </div>
-        </div>
-      </div>
-    </div> -->
+
   </nav>  
 </template>
+
+<script>
+export default {
+  props: ['isEdit'],
+  created() {
+    console.log(this)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.navbar-brand {
+  width: 100%;
+}
+.button-area {
+  margin-left: auto;
+}
+</style>

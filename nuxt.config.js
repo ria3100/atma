@@ -25,7 +25,6 @@ export default {
    ** Global CSS
    */
   css: [
-    'bulma',
     '@/assets/scss/main.scss',
     '@fortawesome/fontawesome-free-webfonts',
     '@fortawesome/fontawesome-free-webfonts/css/fa-brands.css',
@@ -49,7 +48,6 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
     '@nuxtjs/pwa',
     '@nuxtjs/axios'
   ],

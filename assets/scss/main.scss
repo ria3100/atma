@@ -1,7 +1,4 @@
-// * {
-//   user-select: none;
-// }
+$modal-content-width: 900px;
+$body-background-color: #eee;
 
-html {
-  background: #eee !important;
-}
+@import "~bulma/bulma.sass";

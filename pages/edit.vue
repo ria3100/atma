@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="container">
-      <Users :isEdit="false" />
+      <Users :isEdit="true" />
     </div>
   </section>
 </template>

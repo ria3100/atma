@@ -1,7 +1,7 @@
 <template>
-  <div class="box" :class="{'is-edit': isEdit}">
+  <div class="box handle" :class="{'is-edit': isEdit}">
     <div class="name-area">
-      <i class="fas fa-bars handle" v-if="isEdit"></i>
+      <i class="fas fa-bars" v-if="isEdit"></i>
       <strong>{{user.name}}</strong><br/>
       <small>{{user.uid}}</small>
     </div>

@@ -97,10 +97,10 @@ export default {
           return
         }
 
-        if (result) {
-          this.$emit(this.action, this.tmp)
-          return
-        }
+        // エラーが存在する
+        if (!result) return
+
+        this.$emit(this.action, this.tmp)
       })
     },
   },

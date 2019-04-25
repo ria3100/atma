@@ -32,14 +32,14 @@
       >
         <UserBox
           :user="user"
-          :isEdit="isEdit"
+          :is-edit="isEdit"
           @update="openModal('update', user.uid)"
           @remove="openModal('remove', user.uid)"
         />
       </div>
       <div class="column is-4">
         <div
-          class="box has-text-centered"
+          class="box has-text-centered is-edit"
           v-if="isEdit"
           @click="openModal('add', '')"
         >
@@ -48,21 +48,13 @@
       </div>
     </Draggable>
 
-    <a
-      class="button is-primary is-fullwidth"
-      @click="$emit('setIsEdit', false)"
-      v-if="isEdit"
-    >
-      編集を終わる
-    </a>
-
-    <Modal :isOpen="modalUid !== null" @close="closeModal">
+    <Modal :is-open="modalUid !== null" @close="closeModal">
       <div class="box">
         <TimecardButtons
           v-if="action === 'timecard'"
           :user="getUser(modalUid)"
-          @going="going(modalUid)"
-          @leaving="leaving(modalUid)"
+          @going="post('in')"
+          @leaving="post('out')"
         />
         <UserEdit
           v-if="action === 'update' || action === 'add'"
@@ -85,7 +77,10 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import Draggable from 'vuedraggable'
+
 import Modal from './modal'
 import { TimecardButtons, UserEdit, UserRemove, UserBox } from '@/components/molecules'
 
@@ -106,7 +101,8 @@ export default {
       action: null,
       resNotification: null,
       setTimeoutId: null,
-      isDrag: false
+      isDrag: false,
+      isLoding: false
     }
   },
 
@@ -115,43 +111,54 @@ export default {
       this.modalUid = uid
       this.action = action
     },
+
     closeModal() {
       this.modalUid = null
       this.action = null
     },
-    going(uid) {
-      this.post('in', uid)
-      this.closeModal()
-    },
-    leaving(uid) {
-      this.post('out', uid)
-      this.closeModal()
-    },
-    async post(type, uid) {
-      const { pass } = this.$store.getters['user/getUser'](uid)
-      const res = await this.$axios.post('https://asia-northeast1-mock-mock.cloudfunctions.net/main', { type, uid, pass })
 
-      const status = res.status === 200
-        ? 'success'
-        :'error'
+    async post(action) {
+      if (this.isLoding) return
 
-      await this.notification(status)
+      this.isLoding = true
+      const { uid, pass } = this.$store.getters['user/getUser'](this.modalUid)
+      //XXX あとで消す
+      // const res = await this.$axios({
+      //     method: 'post',
+      //     headers: {
+      //       "Access-Control-Allow-Origin": "*",
+      //       'Content-Type': 'application/json',
+      //     },
+      //     url: 'https://asia-northeast1-mock-mock.cloudfunctions.net/main',
+      //     data: {action, uid, pass }
+      // }).then(res => {
+      const res = await this.$axios
+        .post('https://httpstat.us/200', { action, uid, pass })
+        // .post('https://asia-northeast1-mock-mock.cloudfunctions.net/main', {action, uid, pass })
+        .then(res => {
+          this.result('success')
+        })
+        .catch(err => {
+          this.result('error')
+        })
+      this.isLoding = false
     },
+
     add(user) {
       this.$store.dispatch("user/addUser", user)
-      this.closeModal()
-      this.notification('success')
+      this.result('success')
     },
+
     update(user) {
       this.$store.dispatch("user/updateUser", { uid: this.modalUid, user })
-      this.closeModal()
-      this.notification('success')
+      this.result('success')
     },
+
     remove(uid) {
       this.$store.dispatch("user/removeUser", this.modalUid)
-      this.closeModal()
-      this.notification('success')
+      this.result('success')
     },
+
     async notification(status) {
       this.resNotification = status
       clearTimeout(this.setTimeoutId)
@@ -159,10 +166,17 @@ export default {
         this.resNotification = null
       }, 3000)
     },
+
+    result(status) {
+      this.closeModal()
+      this.notification(status)
+    },
+
     getUser(uid) {
       if (!uid) return { name: '', uid: '', pass: '' }
       return this.$store.getters['user/getUser'](uid)
     }
+
   },
 
   computed: {
@@ -171,9 +185,10 @@ export default {
         return this.$store.getters['user/getUsers']
       },
       set(val) {
-        this.$store.dispatch('user/updateList', val)[0]
+        this.$store.dispatch('user/updateList', val)
       }
     },
+    
     dragOptions() {
       return {
         animation: 200,
@@ -188,6 +203,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .box.is-edit {
+    height: 90px;
+    &.has-text-centered {
+      line-height: 50px;
+    }
+  }
+  
   .notification {
     margin-bottom: 32px;
   }

@@ -27,3 +27,10 @@ export default {
   props: ['user']
 }
 </script>
+
+<style lang="scss" scoped>
+.button.is-large {
+  padding-top: 32px;
+  padding-bottom: 32px; 
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Navbar />
+  <div id="wrapper">
+    <Navbar :is-edit="$route.name === 'edit'"/>
     <nuxt />
   </div>
 </template>
@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+#wrapper {
+  margin-top: 52px;
+}
 </style>
