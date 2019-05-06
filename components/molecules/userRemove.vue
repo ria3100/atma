@@ -3,7 +3,7 @@
     <strong>{{user.name}}</strong><br/>
     <small>{{user.uid}}</small>
     <hr/>
-    <form autocomplete="off">
+    <form autocomplete="off" @submit.prevent>
       確認のためメールアドレスを入力してください。
       <div class="field">
         <div class="control">

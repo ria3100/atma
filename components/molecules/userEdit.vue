@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form autocomplete="off">
+    <form autocomplete="off" @submit.prevent>
       <div class="field">
         <label class="label">名前</label>
         <div class="control">

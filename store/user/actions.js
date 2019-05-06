@@ -1,3 +1,4 @@
+import axios from 'axios'
 import cryptico from 'cryptico-js'
 
 const publicKeyString =
@@ -26,9 +27,27 @@ const updateList = ({ commit }, list) => {
   commit('updateList', list)
 }
 
+const submitTimeCard = async ({ commit }, param) => {
+  return await axios
+    .post('https://asia-northeast1-mock-mock.cloudfunctions.net/main', param)
+    .then(() => {
+      return {
+        status: 'success'
+      }
+    })
+    .catch(() => {
+      return {
+        status: 'error',
+        msg:
+          '失敗しました。メールアドレスかパスワードが間違ってる可能性があります。'
+      }
+    })
+}
+
 export default {
   addUser,
   removeUser,
   updateUser,
-  updateList
+  updateList,
+  submitTimeCard
 }

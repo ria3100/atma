@@ -3,17 +3,17 @@
     <div
       class="notification"
       :class="{
-        'is-success': resNotification === 'success',
-        'is-warning':  resNotification === 'error',
+        'is-success': resNotification && resNotification.status === 'success',
+        'is-warning':  resNotification && resNotification.status === 'error',
       }"
       v-show="resNotification !== null"
     >
       <button class="delete" @click="resNotification = null"></button>
-      <p v-if="resNotification === 'success'">
-        成功しました。
+      <p v-if="resNotification && resNotification.status === 'success'">
+        {{resNotification.msg || '成功しました。'}}
       </p>
-      <p v-if="resNotification === 'error'">
-        失敗しました。メールアドレス課パスワードが間違ってる可能性があります。
+      <p v-if="resNotification && resNotification.status === 'error'">
+        {{resNotification.msg}}
       </p>
     </div>
 
@@ -122,41 +122,49 @@ export default {
 
       this.isLoding = true
       const { uid, pass } = this.$store.getters['user/getUser'](this.modalUid)
-      //XXX あとで消す
-      // const res = await this.$axios({
-      //     method: 'post',
-      //     headers: {
-      //       "Access-Control-Allow-Origin": "*",
-      //       'Content-Type': 'application/json',
-      //     },
-      //     url: 'https://asia-northeast1-mock-mock.cloudfunctions.net/main',
-      //     data: {action, uid, pass }
-      // }).then(res => {
-      const res = await this.$axios
-        .post('https://httpstat.us/200', { action, uid, pass })
-        // .post('https://asia-northeast1-mock-mock.cloudfunctions.net/main', {action, uid, pass })
-        .then(res => {
-          this.result('success')
-        })
-        .catch(err => {
-          this.result('error')
-        })
+      console.log(action)
+      const res = await this.$store.dispatch(
+        "user/submitTimeCard",
+        { type: action, uid, pass }
+      )
+      this.result(res)
       this.isLoding = false
     },
 
     add(user) {
       this.$store.dispatch("user/addUser", user)
-      this.result('success')
+        .then(() => this.result({
+          status: 'success',
+        }))
+        .catch(() => this.result({
+          status: 'error',
+          msg: 'エラーが発生しました。'
+        }))
+        this.modalUid = null
     },
 
     update(user) {
       this.$store.dispatch("user/updateUser", { uid: this.modalUid, user })
-      this.result('success')
+        .then(() => this.result({
+            status: 'success',
+        }))
+        .catch(() => this.result({
+            status: 'error',
+            msg: 'エラーが発生しました。'
+        }))
+        this.modalUid = null
     },
 
     remove(uid) {
       this.$store.dispatch("user/removeUser", this.modalUid)
-      this.result('success')
+        .then(() => this.result({
+            status: 'success',
+        }))
+        .catch(() => this.result({
+            status: 'error',
+            msg: 'エラーが発生しました。'
+        }))
+        this.modalUid = null
     },
 
     async notification(status) {
