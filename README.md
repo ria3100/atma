@@ -36,7 +36,7 @@
 ### APIサーバー
 
 #### エンドポイント
-POST https://asia-northeast1-mock-mock.cloudfunctions.net/main
+POST https://httpstat.us/200
 
 正常=>200系
 
