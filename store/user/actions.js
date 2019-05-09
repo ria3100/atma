@@ -29,7 +29,7 @@ const updateList = ({ commit }, list) => {
 
 const submitTimeCard = async ({ commit }, param) => {
   return await axios
-    .post('https://asia-northeast1-mock-mock.cloudfunctions.net/main', param)
+    .post('https://httpstat.us/200', param)
     .then(() => {
       return {
         status: 'success'
